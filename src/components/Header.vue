@@ -8,7 +8,7 @@
       <b-collapse is-nav id="nav_collapse"> <!-- collapse - b-navbar의 toggleable 기준으로 화면이 기준보다 작아졌을 때 숨기는 기능 -->
         <b-navbar-nav>
           <b-nav-item href="#">공지사항</b-nav-item>
-          <b-nav-item href="#">자유게시판</b-nav-item>
+          <b-nav-item to="/board/free">자유게시판</b-nav-item>
           <b-nav-item href="#">구인구직</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
