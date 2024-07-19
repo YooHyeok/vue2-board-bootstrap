@@ -80,4 +80,12 @@
         ```bash
         code .
         ```
+      - main.js
+        ```javascript
+        import BootstrapVue from 'bootstrap-vue' // dependency 설치시 자동 추가됨
+        /* 추가 */
+        import 'bootstrap/dist/css/bootstrap.css'
+        import 'bootstrap-vue/dist/bootstrap-vue.css'
+        ```
 </details>
+
