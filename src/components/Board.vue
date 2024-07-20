@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-table striped hover :items="items" :fields="fields"></b-table>
+    <b-table striped hover :items="items" :fields="fields" @row-clicked="rowClick"/>
   </div>
 </template>
 
@@ -10,7 +10,6 @@
   /* 게시글번호 기준 역순(오름차순) 정렬 */
   let items = data.Content.sort((a,b) => {return b.content_id-a.content_id})
   items = items.map(content => {
-      console.log(content)
       return {  // 순회한 요소 전개 후 user_name 필드 추가 (필터링된 user_name)
         ...content,
         user_name: data.User.filter(user => user.user_id === content.user_id)[0].name
@@ -48,6 +47,13 @@
         ], 
         // items: data.Content
         items: items
+      }
+    },
+    methods: {
+      rowClick(item, index, event) {
+        this.$router.push({
+          path: `/board/free/detail/${item.content_id}`
+        })
       }
     }
   }
