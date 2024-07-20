@@ -89,3 +89,97 @@
         ```
 </details>
 
+
+# b-table 태그
+부트스트랩에서 지원하는 Table 렌더링 태그이다.
+
+## :items 속성 , :fields 속성
+ - #### items: 요소를 순회해서 출력한다.
+ - #### fields: items 요소로부터 보여줄 필드(컬럼)이다.
+    - 일반적으로 배열 형태로 보여줄 필드 property의 명 형태로 나열한다.
+    - 보여줄 property명을 변경하기 위해서는 key, label property를 갖는 Object로 나열한다.
+        - key: 할당될 property명
+        - label: 실제 출력될 컬럼명
+  ```vue
+  <template>
+    <div>
+      <b-table striped hover :items="items" :fields="fields"/>
+    </div>
+  </template>
+  <script>
+  export default {
+      name: 'Board',
+      data() {
+        return {
+
+          // fields: ['content_id', `title`, `created_at`], // items로부터 보여줄 컬럼
+
+          fields: [// items로부터 보여줄 컬럼 key: 실제 컬럼 / label: 보여줄 내용
+            {
+              key: 'content_id',
+              label: '글번호',
+
+            },
+            {
+              key: 'title',
+              label: '제목'
+            }, 
+            {
+              key: `created_at`,
+              label: '작성일'
+            },
+            {
+              key: 'user_name',
+              label: '글쓴이',
+
+            },
+          ], 
+          // items: data.Content
+          items: items
+        }
+      },
+  }
+  </script>
+  ```
+  ```html
+  <table role="table" aria-busy="false" aria-colcount="4"
+      class="table b-table table-striped table-hover" id="__BVID__16">
+      <thead role="rowgroup" class="">
+        <tr role="row" class="">
+          <th role="columnheader" scope="col" aria-colindex="1" class="">
+            <div>글번호</div>
+          </th>
+          <th role="columnheader" scope="col" aria-colindex="2" class="">
+            <div>제목</div>
+          </th>
+          <th role="columnheader" scope="col" aria-colindex="3" class="">
+            <div>작성일</div>
+          </th>
+          <th role="columnheader" scope="col" aria-colindex="4" class="">
+            <div>글쓴이</div>
+          </th>
+        </tr>
+      </thead>
+      <tbody role="rowgroup"><!---->
+        <tr role="row" class="">
+          <td aria-colindex="1" role="cell" class="">3</td>
+          <td aria-colindex="2" role="cell" class="">생일 축하해주신 여러분 감사합니다!</td>
+          <td aria-colindex="3" role="cell" class="">2019-03-29 13:11:42</td>
+          <td aria-colindex="4" role="cell" class="">아이린</td>
+        </tr>
+        <tr role="row" class="">
+          <td aria-colindex="1" role="cell" class="">2</td>
+          <td aria-colindex="2" role="cell" class="">레드벨벳 많이 사랑해 주세요^^</td>
+          <td aria-colindex="3" role="cell" class="">2019-01-02 13:11:42</td>
+          <td aria-colindex="4" role="cell" class="">조이</td>
+        </tr>
+        <tr role="row" class="">
+          <td aria-colindex="1" role="cell" class="">1</td>
+          <td aria-colindex="2" role="cell" class="">개린이 르라나의 강의 알람표</td>
+          <td aria-colindex="3" role="cell" class="">2019-01-01 13:11:42</td>
+          <td aria-colindex="4" role="cell" class="">lelana</td>
+        </tr>
+      </tbody>
+    </table>
+  ```
+
