@@ -24,7 +24,7 @@
       </div>
       <div class="content-detail-button">
         <b-button variant="primary">수정</b-button>
-        <b-button variant="success">삭제</b-button>
+        <b-button variant="success" @click="deleteData">삭제</b-button>
       </div>
       <div class="content-detail-comment">
         덧글
@@ -48,6 +48,18 @@ export default {
         .name,
       created: contentData.created_at
     };
+  },
+  methods: {
+    deleteData() {
+      /* findIndex: 해당 조건이 참인 객체의 index값 반환 */
+      const contentIndex = data.Content.findIndex(item => item.content_id === this.contentId);
+      console.log(contentIndex)
+      /* 배열로부터 index 기준 제거 */
+      data.Content.splice(contentIndex, 1);
+      this.$router.push({
+        path:`/board/free`
+      })
+    }
   }
 }
 </script>
