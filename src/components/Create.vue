@@ -10,7 +10,7 @@
       rows="3"
       max-rows="6"
     />
-    <b-button @click="uploadContent">저장</b-button>
+    <b-button @click="updateMode ? updateContent() : uploadContent()">저장</b-button>
     <b-button @click="cancel">취소</b-button>
   </div>
 </template>
@@ -19,17 +19,25 @@
 import data from '@/data';
 export default {
   name: 'Create',
-
   data() {
     return {
       subject: null,
       context: null,
       userId: 1,
       createdAt: '2024-07-21 20:27:42',
-      updatedAt: null
+      updatedAt: null,
+      updateObject: null,
+      updateMode: this.$route.params.contentId > 0 ? true : false,
     };
   },
-
+  created() {
+    if(this.$route.params.contentId > 0) {
+      const contentId = Number(this.$route.params.contentId)
+      this.updateObject = data.Content.filter(item => item.content_id === contentId)[0]
+      this.subject = this.updateObject.title;
+      this.context = this.updateObject.context;
+    }
+  },
   methods: {
     /**
      * 게시글 신규 저장 기능  
@@ -52,9 +60,18 @@ export default {
       })
       this.redirectToBoard();
     },
+
+    updateContent() {
+      /* filter를 통해 가져온 데이터는 주소값을 공유하게됨... */
+      this.updateObject.title = this.subject;
+      this.updateObject.context = this.context;
+      this.redirectToBoard();
+    },
+    
     cancel() {
       this.redirectToBoard();
     },
+    
     redirectToBoard() {
       this.$router.push({
         path: '/board/free/'
