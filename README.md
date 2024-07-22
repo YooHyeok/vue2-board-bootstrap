@@ -100,6 +100,8 @@
     - 보여줄 property명을 변경하기 위해서는 key, label property를 갖는 Object로 나열한다.
         - key: 할당될 property명
         - label: 실제 출력될 컬럼명
+  
+  ### 예시 코드
   ```vue
   <template>
     <div>
@@ -141,6 +143,7 @@
   }
   </script>
   ```
+  ### 실제 출력
   ```html
   <table role="table" aria-busy="false" aria-colcount="4"
       class="table b-table table-striped table-hover" id="__BVID__16">
@@ -183,3 +186,28 @@
     </table>
   ```
 
+# Arrays.findIndex(조건)
+특정 조건에 만족하는 요소의 첫번째 index를 찾는다.
+
+```js
+const targetId = 2;
+const examples = [
+  {
+    id: 1
+  }, 
+  {
+    id: 2
+  }, 
+  {
+    id: 3
+  }
+]
+const findIndex = examples.findIndex(item => item.id === targetId);
+```
+위 예시코드는 examples 배열의 요소중 id가 targetId(2)와 일치하는 요소를 찾는다.  
+조건이 일치하는 가장 처음 요소를 찾아 인덱스를 반환하므로, 유니크한 키값을 찾는데 사용하는것이 적절하다.  
+
+# Arrays.splice(index, count, item)
+특정 index를 기준으로 count수 만큼 제거한다.  
+만약 count가 0일 경우 3번째 인자값으로 대체할 새로운 요소를 지정할 수 있다.  
+(값 변경)
