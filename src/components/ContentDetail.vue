@@ -27,7 +27,7 @@
         <b-button variant="success" @click="deleteData">삭제</b-button>
       </div>
       <div class="content-detail-comment">
-        덧글
+        <CommentList :contentId="contentId"/>
       </div>
     </b-card>
   </div>
@@ -35,8 +35,12 @@
 
 <script>
 import data from '@/data';
+import CommentList from '@/components/CommentList.vue';
 export default {
   name: 'ContentDetail',
+  components: {
+    CommentList
+  },
   data() {
     const contentId = Number(this.$route.params.contentId); // 파라미터 숫자 변환
     const contentData = data.Content.filter(item => item.content_id === contentId)[0] // 일치하는 ID에 해당하는 Content 반환
