@@ -211,3 +211,45 @@ const findIndex = examples.findIndex(item => item.id === targetId);
 특정 index를 기준으로 count수 만큼 제거한다.  
 만약 count가 0일 경우 3번째 인자값으로 대체할 새로운 요소를 지정할 수 있다.  
 (값 변경)
+
+# Pagenation(BootStrap)
+
+### b-pagination
+페이지네이션 버튼들이 생성된다.
+#### 필요한 속성 값들
+현재 페이지 값(current-page), 출력될 갯수(per-page), 전체 데이터 갯수(:total-rows) 속성들로 구성된다.  
+이때 출력될 갯수에 해당하는 per-page 속성과 현재 페이지 값인 current-page 속성은 b-table에서도 사용한다.  
+해당 데이터를 기준으로 실제적으로 출력(b-table)과 조작(b-pagination)으로 매핑된다.
+
+```vue
+<template>
+    <b-table 
+      striped hover 
+      :per-page="perPage" 
+      :current-page="currentPage"
+      :items="items" 
+      @row-clicked="rowClick"
+    />
+    <!-- total-rows에 실제 전체 row수를 저장 -->
+    <b-pagination
+      v-model="currentPage"
+      :total-rows="rows"
+      :per-page="perPage"
+      align="center"
+    />
+</template>
+<script>
+export default {
+  data() {
+    return {
+      items: [/* 게시글 목록... */]
+    }
+  },
+  computed: {
+    rows() {
+      return this.items.length
+    }
+  }
+}
+</script>
+```
