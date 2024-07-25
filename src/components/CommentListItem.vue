@@ -9,8 +9,13 @@
       <div class="comment-list-item-button">
         <b-button variant="info">수정</b-button>
         <b-button variant="info">삭제</b-button>
+        <b-button variant="info" @click="subCommentToggle">덧글 달기</b-button>
       </div>
     </div>
+    <template v-if="subCommentCreateToggle"> <!-- 토글일때만 대댓글 작성 상자 출력 -->
+      <CommentCreate :isSubComment="true" :commentId="commentObj.comment_id" :reloadSubComment="reloadSubComment" />
+    </template>
+
     <!-- 대댓글 -->
     <template v-if="subCommentList.length > 0">
       <div
@@ -34,11 +39,14 @@
 
 <script>
 import data from '@/data'
+import CommentCreate from '@/components/CommentCreate'
 export default {
-
   name: 'CommentListItem',
   props: {
     commentObj: Object
+  },
+  components: {
+    CommentCreate,
   },
   data() {
     return {
@@ -51,7 +59,8 @@ export default {
             user_name: data.User.filter(item => item.user_id === subCommentItem.user_id)[0].name
           }
         )
-      )
+      ),
+      subCommentCreateToggle: false,
     };
   },
 
@@ -60,8 +69,26 @@ export default {
   },
 
   methods: {
-    
-  },
+    subCommentToggle() {
+      this.subCommentCreateToggle = !this.subCommentCreateToggle
+    },
+    /**
+     * 대댓글 리스트를 리로드 한다.
+     * subComment 최신 data로부터 다시 초기화 한다.
+     */
+    reloadSubComment() {
+      this.subCommentList = data.SubComment
+      .filter(item => item.comment_id === this.commentObj.comment_id) // 대댓글 필터링 - 부모 댓글의 commentId PK와 일치하는 commentId 기준
+      .map(subCommentItem => ( // user_id가 일치하는 name 저장 (객체 반환을 위해 괄호로 묶음.)
+          {
+            ...subCommentItem,
+            user_name: data.User.filter(item => item.user_id === subCommentItem.user_id)[0].name
+          }
+        )
+      )
+      this.subCommentCreateToggle = !this.subCommentCreateToggle
+    }
+  }
 };
 </script>
 <style>
