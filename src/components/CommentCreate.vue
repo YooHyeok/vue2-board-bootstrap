@@ -9,7 +9,7 @@
         max-rows="6"
       ></b-form-textarea>
       <b-input-group-append>
-        <b-button variant="info" @click="createComment">작성하기</b-button>
+        <b-button variant="info" @click="isSubComment ? createSubComment() : createComment()">작성하기</b-button>
       </b-input-group-append>
     </b-input-group>
 </div>
@@ -21,7 +21,11 @@ export default {
   name: 'pCommentCreate',
   props: {
     contentId: Number,
-    reloadComment: Function
+    commentId: Number,
+    isSubComment: Boolean,
+    reloadComment: Function,
+    subCommentCreateToggle:Boolean,
+    reloadSubComment: Function
   },
   data() {
     return {
@@ -41,7 +45,21 @@ export default {
           updated_at: null,
         }
       )
-      thisreloadComment();
+      this.reloadComment();
+    },
+    createSubComment() {
+      data.SubComment.push(
+        {
+          subcomment_id: data.SubComment[data.SubComment.length - 1].subcomment_id+1, // data의 Comment의 마지막 요소를 가지고온 뒤 해당 객체의 comment_id + 1을 한다.
+          user_id: 1,
+          comment_id: this.commentId,
+          context: this.context,
+          created_at: '2024-07-24 21:55:11',
+          updated_at: null,
+        }
+      )
+      this.reloadSubComment();
+      this.subCommentCreateToggle = !this.subCommentCreateToggle
     }
   },
 };
