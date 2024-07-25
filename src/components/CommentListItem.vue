@@ -13,7 +13,11 @@
       </div>
     </div>
     <template v-if="subCommentCreateToggle"> <!-- 토글일때만 대댓글 작성 상자 출력 -->
-      <CommentCreate :isSubComment="true" :commentId="commentObj.comment_id" :reloadSubComment="reloadSubComment" />
+      <CommentCreate 
+      :isSubComment="true" 
+      :commentId="commentObj.comment_id"
+      :subCommentCreateToggle="subCommentCreateToggle"
+      :reloadSubComment="reloadSubComment" />
     </template>
 
     <!-- 대댓글 -->
@@ -86,7 +90,7 @@ export default {
           }
         )
       )
-      this.subCommentCreateToggle = !this.subCommentCreateToggle
+      
     }
   }
 };
