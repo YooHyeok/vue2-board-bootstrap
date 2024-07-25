@@ -1,6 +1,21 @@
 <template>
   <div>
-    <b-table striped hover :items="items" :fields="fields" @row-clicked="rowClick"/>
+    <b-table 
+      striped hover 
+      :per-page="perPage"
+      :current-page="currentPage"
+      :items="items" 
+      :fields="fields"
+      @row-clicked="rowClick"
+    />
+    <!-- total-rows에 실제 전체 row수를 저장 -->
+    <b-pagination
+      v-model="currentPage"
+      :total-rows="rows"
+      :per-page="perPage"
+      align="center"
+    ></b-pagination>
+
     <b-button @click="writeContent">글쓰기</b-button>
   </div>
 </template>
@@ -26,9 +41,10 @@
       )
 
       return {
+        perPage: 10, // 보여질 게시글 수
+        currentPage: 1, // 현재 페이지 위치 (표시됨) default 1페이지
 
         // fields: ['content_id', `title`, `created_at`], // items로부터 보여줄 컬럼
-
         fields: [// items로부터 보여줄 컬럼 key: 실제 컬럼 / label: 보여줄 내용
           {
             key: 'content_id',
@@ -65,6 +81,11 @@
         })
       }
     },
+    computed: {
+      rows() {
+        return this.items.length
+      }
+    }
     
   }
 </script>
