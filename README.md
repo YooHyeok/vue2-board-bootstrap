@@ -253,3 +253,53 @@ export default {
 }
 </script>
 ```
+
+# *CSS flex 속성*
+주로 레이아웃을 잡을 때 사용한다.
+잘 이용하면 엘리먼트를 원하는대로 배치할 수 있다.
+
+1. HTML 태그가 2단계 필요하다.  
+  부모가 있고 자식이 위치하는 형태에서만 사용할 수 있다.
+  - 부모 : display: flex
+  - 자식 : flex-direction, justify-content, align-items
+
+## flex-direction
+자식태그의 정렬 방향을 정하는 속성으로 총 4개의 속성을 가지고 있다.
+
+1. row  
+단어 뜻 그대로 행을 뜻한다.  
+수평 정렬 방식을 말한다.  
+flex-direction 속성을 명시적으로 선언하여 사용하지 않을때 기본값은 row이다.
+
+2. row-reverse  
+수평 정렬된 행의 순서를 반대로 뒤집는다.
+3. column  
+단어 뜻 그대로 열을 뜻한다.  
+수직 정렬 방식을 말한다.  
+4. column-reverse  
+수직 정렬된 행의 순서를 반대로 뒤집는다.
+
+
+## justify-content (수평정렬)
+먼저 주 축, 교차 축에 대해 알아야 한다.  
+flex-direction 속성에서 설정 된 값이 주 축으로 수직인 축을 교차 축 이라고 한다. 
+
+즉, flex-direction 속성이 row로 되어있다면 주축은 row 수평방향이고 교차축은 수직방향이다.  
+
+justify-content 속성은 `주축`을 따라 자식들을 정렬하는 방법을 설정할 수 있다.  
+기본값은 flex-start이며, 부모 컨테이너에 시작성 해서 단순히 쭉 순서대로 정렬 된다는 뜻이다.  
+1. flex-start  
+부모 컨테이너에 시 작성 해서 단순히 쭉 순서대로 정렬된다.
+2. space-between  
+주 축 방향의 여백을 자식 태그들 사이에 균등히 배분한다.  
+[[<---자식1--->][<--여백-->][<-자식2->]]
+
+## align-items (수직정렬)
+justify-content속성과 반대로 `교차축`을 따라 자식들을 정렬하는 방법을 설정한다.  
+기본값은 strech이다.  
+- center  
+수직 가운데 정렬된다
+
+이 외에도 많은 속성들이 존재한다.
+
+<a href="https://flexboxfroggy.com/#ko">플렉스 개구리 테스트 사이트!</a>
