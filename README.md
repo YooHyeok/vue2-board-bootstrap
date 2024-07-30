@@ -303,3 +303,59 @@ justify-content속성과 반대로 `교차축`을 따라 자식들을 정렬하�
 이 외에도 많은 속성들이 존재한다.
 
 <a href="https://flexboxfroggy.com/#ko">플렉스 개구리 테스트 사이트!</a>
+
+
+# *AXIOS*
+
+현재 프로젝트에서는 구버전을 사용해야한다.
+- install
+  ```bash
+  npm install axios@0.27.2
+  ```
+
+- Get.vue
+  ```vue
+  <script>
+  import axios from 'axios'
+  export default {
+    name: 'Get',
+    created() {
+      axios.get('http://127.0.0.1:3000/member', {
+        params: {
+          name: '예리'
+        }
+      })
+      .then(response => {
+        // 응답 처리
+        console.log(response.data);
+      })
+      .catch(error => {
+        // 에러 처리
+        console.error(error);
+      });
+    }
+  }
+  </script>
+  ```
+- Post.vue
+  ```vue
+  <script>
+  import axios from 'axios'
+  export default {
+    name: 'Get',
+    created() {
+      axios.post('http://127.0.0.1:3000/add/user', {
+        user_name: '개린이유혁스쿨'
+      })
+      .then(response => {
+        // 응답 처리
+        console.log(response.data);
+      })
+      .catch(error => {
+        // 에러 처리
+        console.error(error);
+      });
+    }
+  }
+  </script>
+  ```
