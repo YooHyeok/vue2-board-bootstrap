@@ -17,6 +17,7 @@
 
 <script>
 import data from '@/data';
+import axios from 'axios'
 export default {
   name: 'Create',
   data() {
@@ -37,6 +38,17 @@ export default {
       this.subject = this.updateObject.title;
       this.context = this.updateObject.context;
     }
+    axios.post('http://127.0.0.1:3000/add/user', {
+      user_name: '개린이유혁스쿨'
+    })
+    .then(response => {
+      // 응답 처리
+      console.log(response.data);
+    })
+    .catch(error => {
+      // 에러 처리
+      console.error(error);
+    });
   },
   methods: {
     /**
