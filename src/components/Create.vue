@@ -17,7 +17,9 @@
 
 <script>
 import data from '@/data';
-import axios from 'axios'
+// import axios from 'axios'
+import { addContent } from '@/service';
+
 export default {
   name: 'Create',
   data() {
@@ -57,7 +59,7 @@ export default {
      * 게시글 번호의 경우 역순 정렬 된 데이터의 첫번째 요소값 + 1을 한다.  
      * (→ 가장 마지막 글번호 + 1이 됨)
      */
-    uploadContent() {
+    uploadContent_deprecated() {
       /* 역순 정렬 (내림차순) */
       let items = data.Content.sort((a,b) => b.content_id - a.content_id)
       /* 역순 정렬의 가장 최신 데이터 + 1 */
@@ -70,6 +72,16 @@ export default {
         created_at: this.createdAt,
         updated_at: this.updatedAt,
       })
+      this.redirectToBoard();
+    },
+    
+    async uploadContent() {
+      await addContent({
+        user_id: this.userId,
+        title: this.subject,
+        context: this.context,
+      });
+
       this.redirectToBoard();
     },
 
