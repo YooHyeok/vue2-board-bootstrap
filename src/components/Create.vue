@@ -18,7 +18,7 @@
 <script>
 import data from '@/data';
 // import axios from 'axios'
-import { addContent } from '@/service';
+import { addContent, findContent, modifyContent } from '@/service';
 
 export default {
   name: 'Create',
@@ -33,7 +33,17 @@ export default {
       updateMode: this.$route.params.contentId > 0 ? true : false,
     };
   },
-  created() {
+  async created() {
+    /* 실제 서버로부터 조회 */
+    if(this.$route.params.contentId > 0) {
+      const contentId = Number(this.$route.params.contentId)
+      const ret = await findContent({ content_id: contentId})
+      const {data} = ret;
+      this.subject = data.title;
+      this.context = data.context;
+    }
+    return;
+    /* 테스트데이터 */
     if(this.$route.params.contentId > 0) {
       const contentId = Number(this.$route.params.contentId)
       this.updateObject = data.Content.filter(item => item.content_id === contentId)[0]
@@ -74,6 +84,12 @@ export default {
       })
       this.redirectToBoard();
     },
+    updateContent_deprecated() {
+      /* filter를 통해 가져온 데이터는 주소값을 공유하게됨... */
+      this.updateObject.title = this.subject;
+      this.updateObject.context = this.context;
+      this.redirectToBoard();
+    },
     
     async uploadContent() {
       await addContent({
@@ -85,10 +101,13 @@ export default {
       this.redirectToBoard();
     },
 
-    updateContent() {
-      /* filter를 통해 가져온 데이터는 주소값을 공유하게됨... */
-      this.updateObject.title = this.subject;
-      this.updateObject.context = this.context;
+
+    async updateContent() {
+      await modifyContent({
+        context_id: Number(this.$route.params.contentId),
+        title: this.subject,
+        context: this.context 
+      })
       this.redirectToBoard();
     },
     
