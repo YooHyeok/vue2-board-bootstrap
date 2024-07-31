@@ -36,10 +36,21 @@
 <script>
 import data from '@/data';
 import CommentList from '@/components/CommentList.vue';
+import { findContent } from '@/service';
+
 export default {
   name: 'ContentDetail',
   components: {
     CommentList
+  },
+  async created() {
+    /* 게시글 상세내용 service를 통해 DB접근 조회 */
+    const ret = await findContent( {content_id: Number(this.$route.params.contentId)} )
+    const {data} = ret
+    this.title = data.title;
+    this.context = data.context;
+    this.user = data.user_name;
+    this.created = data.created_at;
   },
   data() {
     const contentId = Number(this.$route.params.contentId); // 파라미터 숫자 변환
