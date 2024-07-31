@@ -22,10 +22,16 @@
 
 <script>
   import data from '@/data';
+  import { findContentList } from '@/service';
 
  
   export default {
     name: 'Board',
+    async created() {
+      /* 게시글 목록 service를 통해 DB접근 조회 */
+      const ret = await findContentList()
+      this.items = ret.data;
+    },
     data() {
 
        /* 게시글번호 기준 역순(오름차순) 정렬 */
@@ -66,7 +72,8 @@
           },
         ], 
         // items: data.Content
-        items: items
+        // items: items
+        items: []
       }
     },
     methods: {
