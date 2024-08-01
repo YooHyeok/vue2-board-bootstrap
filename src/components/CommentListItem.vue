@@ -16,7 +16,7 @@
       <CommentCreate 
       :isSubComment="true" 
       :commentId="commentObj.comment_id"
-      :subCommentCreateToggle="subCommentCreateToggle"
+      :subCommentToggle="subCommentToggle"
       :reloadSubComment="reloadSubComment" />
     </template>
 
@@ -44,6 +44,8 @@
 <script>
 import data from '@/data'
 import CommentCreate from '@/components/CommentCreate'
+import { findSubComment } from '@/service';
+
 export default {
   name: 'CommentListItem',
   props: {
@@ -51,6 +53,10 @@ export default {
   },
   components: {
     CommentCreate,
+  },
+  created() {
+    this.userName = this.commentObj.user_name
+    this.reloadSubComment()
   },
   data() {
     return {
@@ -67,11 +73,6 @@ export default {
       subCommentCreateToggle: false,
     };
   },
-
-  mounted() {
-    
-  },
-
   methods: {
     subCommentToggle() {
       this.subCommentCreateToggle = !this.subCommentCreateToggle
@@ -80,7 +81,7 @@ export default {
      * 대댓글 리스트를 리로드 한다.
      * subComment 최신 data로부터 다시 초기화 한다.
      */
-    reloadSubComment() {
+    reloadSubComment_deprecated() {
       this.subCommentList = data.SubComment
       .filter(item => item.comment_id === this.commentObj.comment_id) // 대댓글 필터링 - 부모 댓글의 commentId PK와 일치하는 commentId 기준
       .map(subCommentItem => ( // user_id가 일치하는 name 저장 (객체 반환을 위해 괄호로 묶음.)
@@ -91,6 +92,11 @@ export default {
         )
       )
       
+    },
+    async reloadSubComment() {
+      const ret = await findSubComment({comment_id: this.commentObj.comment_id})
+      const {data} = ret;
+      this.subCommentList = data;
     }
   }
 };
