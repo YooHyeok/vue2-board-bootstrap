@@ -17,14 +17,16 @@
 
 <script>
 import data from "@/data"
+import { addComment, addSubComment } from '@/service';
+
 export default {
-  name: 'pCommentCreate',
+  name: 'CommentCreate',
   props: {
     contentId: Number,
     commentId: Number,
     isSubComment: Boolean,
     reloadComment: Function,
-    subCommentCreateToggle:Boolean,
+    subCommentToggle:Function,
     reloadSubComment: Function
   },
   data() {
@@ -34,7 +36,7 @@ export default {
     };
   },
   methods: {
-    createComment() {
+    createComment_deprecated() {
       data.Comment.push(
         {
           comment_id: data.Comment[data.Comment.length - 1].comment_id+1, // data의 Comment의 마지막 요소를 가지고온 뒤 해당 객체의 comment_id + 1을 한다.
@@ -47,7 +49,16 @@ export default {
       )
       this.reloadComment();
     },
-    createSubComment() {
+    async createComment() {
+      await addComment({
+        user_id: 1,
+        content_id: this.contentId,
+        context: this.context,
+      })
+      this.context = ""
+      this.reloadComment();
+    },
+    createSubComment_deprecated() {
       data.SubComment.push(
         {
           subcomment_id: data.SubComment[data.SubComment.length - 1].subcomment_id+1, // data의 Comment의 마지막 요소를 가지고온 뒤 해당 객체의 comment_id + 1을 한다.
@@ -58,8 +69,17 @@ export default {
           updated_at: null,
         }
       )
+      this.subCommentToggle()
       this.reloadSubComment();
-      this.subCommentCreateToggle = !this.subCommentCreateToggle
+    },
+    async createSubComment() {
+      await addSubComment({
+          user_id: 1,
+          comment_id: this.commentId,
+          context: this.context,
+      })
+      this.subCommentToggle()
+      this.reloadSubComment();
     }
   },
 };
